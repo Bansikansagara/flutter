@@ -1,0 +1,132 @@
+audioplayers: ^1.0.1
+
+
+
+import 'package:audioplayers/audioplayers.dart';
+import 'package:flutter/material.dart';
+
+
+
+class alert extends StatelessWidget {
+  @override Widget build(BuildContext context) {
+    return MaterialApp(home: Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.blue,
+        title: const Text("Flutter Switch Example"),),
+      body: Center(child: SwitchScreen()),));
+  }
+}
+class SwitchScreen extends StatefulWidget {
+  @override SwitchClass createState() => new SwitchClass();
+}
+
+class SwitchClass extends State {
+  bool isSwitched = false;
+  final player = AudioPlayer();
+  var textValue = 'Switch is OFF';
+
+  void toggleSwitch(bool value) /*async*/ {
+    if (isSwitched == false) {
+
+      setState(() {
+        isSwitched = true;
+        textValue = 'Switch Button is ON';
+        player.play(AssetSource('audio/a.mp3'));
+      });
+      player.play(AssetSource('audio/a.mp3'));
+      print('Switch Button is ON');
+    } else {
+      player.stop();
+      setState(() {
+        isSwitched = false;
+        textValue = 'Switch Button is OFF';
+      });
+      print('Switch Button is OFF');
+    }
+  }
+
+  @override Widget build(BuildContext context) {
+    return Column(mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Transform.scale(scale: 2,
+              child: Switch(
+                onChanged: toggleSwitch,
+                value: isSwitched,
+                activeColor: Colors.blue,
+                activeTrackColor: Colors.yellow,
+                inactiveThumbColor: Colors.redAccent,
+                inactiveTrackColor: Colors.orange,)),
+          Text('$textValue', style: const TextStyle(fontSize: 20),),
+
+        ElevatedButton(
+          onPressed: () => AudioPlayer().play(AssetSource('audio/a.mp3')),
+          child: Text('Play'),
+        )
+        ]);
+  }
+}
+
+class AlertEx extends StatefulWidget
+{
+  @override
+  AlertState createState()=> AlertState();
+
+
+}
+
+class AlertState extends State<AlertEx>
+{
+  @override
+  Widget build(BuildContext context)
+  {
+
+    return Center(
+
+      child: ElevatedButton(onPressed: () {
+
+        myalert(context);
+
+      }, child: Text("Click me"),),
+
+    );
+
+
+
+  }
+
+  void myalert(BuildContext context)
+  {
+    // Create button
+    Widget okButton = ElevatedButton(
+      child: Text("OK"),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+
+    // Create AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Simple Alert"),
+      content: Text("This is an alert message."),
+      actions: [
+
+        okButton
+
+      ],
+
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+
+
+
+
+  }
+
+}
